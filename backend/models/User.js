@@ -1,11 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-  name: { type: String },
-  email: { type: String, required: true, unique: true },
+  name: { type: String, trim: true },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'developer' }, // admin/developer
-  createdAt: { type: Date, default: Date.now }
+  role: { type: String, enum: ["developer", "admin"], default: "developer" },
+  createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('User', UserSchema);
+// Optional index for faster lookups
+UserSchema.index({ email: 1 });
+
+export default mongoose.model("User", UserSchema);
