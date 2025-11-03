@@ -1,6 +1,9 @@
+// services/aiEngine.js
 // Simple heuristic-based analyzer — replace with ML/NLP model later.
-export const analyze = async (parsed) => {
-  const { errors, raw } = parsed;
+
+const analyze = async (parsed = {}) => {
+  const { errors = [], raw = '' } = parsed;
+
   let errorCategory = 'Unknown';
   let confidence = 0.6;
   const possibleCauses = [];
@@ -41,3 +44,6 @@ export const analyze = async (parsed) => {
     suggestions
   };
 };
+
+// ✅ Export as default so it can be imported as "aiEngine"
+export default { analyze };
